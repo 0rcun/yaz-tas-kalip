@@ -1,0 +1,349 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>İlk HTML Belgesi</title>
+        <style type="text/css">
+            #canv{
+                border:1px solid red;
+            }
+        </style>
+        <style>
+            #HARITA_M {
+                height: 450px;
+                width: 750px;
+            }
+        </style>
+         <style type="text/css">
+            #KUTU1, #KUTU2 {
+                float:left;padding:10px;margin:10px; -moz-user-select:none;
+            }
+        #KUTU1 { background-color: #6633EF; width:85px; height:85px;  }
+        #KUTU2 { background-color: #FF6699; width:160px; height:170px; }
+        </style>
+        <script type="text/javascript">
+            function dragStart(ev) {
+                ev.dataTransfer.effectAllowed='move';
+                ev.dataTransfer.setData("Text", ev.target.getAttribute('id'));
+                ev.dataTransfer.setDragImage(ev.target,0,0);
+                return true;
+            }
+        </script>        
+        <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+        <script>
+            if (navigator.geolocation){
+                navigator.geolocation.getCurrentPosition(showCurrentLocation);
+            }
+            else{
+                alert("Geolocation API DESTEKLENMIYOR");
+            }
+
+        function showCurrentLocation(position){
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            var coords = new google.maps.LatLng(latitude, longitude);
+            var mapOptions = {
+                zoom: 20,
+                center: coords,
+                mapTypeControl: true,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+           
+            //HARITAYI OLUSTUR VE HTML5 DIV ICINE KOY
+
+            map = new google.maps.Map(document.getElementById("HARITA_M"), mapOptions);
+            //ILK ISARETLEYICIYI KOY
+            var marker = new google.maps.Marker({
+                                                position: coords,
+                                                map: map,
+                                                title: "BULUNULAN KONUM!"
+            });
+        }
+
+
+
+
+
+        </script>
+        <script type="text/javascript">
+            function kopyala() {
+                let field1 = document.getElementById("textField1");
+                let field2 = document.getElementById("textField2");
+                let field3 = document.getElementById("textField3");
+                
+                field2.value = field1.value;
+                field3.value = field1.value;
+            }
+        </script>
+    </head>
+    <nav>
+        <h2>Menu</h2>
+          <ul>
+            <li><a href="http://www.dogus.edu.tr">DOGUS ÜNİVERSİTESİ</a></li>
+            <li><a href="http://www.boun.edu.tr">BOĞAZİÇİ ÜNİVERSİTESİ</a></li>
+            <li><a href="http://www.sabanciuniv.edu.tr">SABANCI ÜNİVERSİTESİ</a></li>
+          </ul>
+    </nav>
+    <body>
+        <p>Web Sayfası İçeriği
+
+            <article>
+                <section>
+                Borsa Haberleri
+                </section>
+            </article>
+
+            <article>
+                <section>
+                 Politik Haberler
+                </section>
+            </article>
+
+            <figure>
+                <img src="GoogleLogo.png" alt="logo" />
+
+                <figcaption>
+                    <a href="http://google.com/logo.png">
+                    Google Logo</a>, daha fazla bilgi için web sayfasını ziyaret ediniz.
+                </figcaption>
+            </figure>
+            <section>
+                
+                <div>
+                    <video controls id="video" src="video.mp4" width="400" height="400">
+                    </video>
+                    <audio controls id="audio" src="ses.mp3"></audio>
+                </div>
+
+            </section>
+
+            <section>
+                <div>
+                    <canvas id="canv" width="200" height="100"></canvas>
+                    <canvas id="canv2"></canvas>                
+                    <canvas id="canv3"></canvas>
+                </div>
+
+                <script type="text/javascript">
+                    var canvas = document.getElementById("canv2");
+                    var context=canvas.getContext("2d");
+                    context.fillStyle = "blue"
+                    context.fillRect(10, 20, 200, 100);
+                </script>
+                <script type="text/javascript">
+                    var canvas = document.getElementById("canv3");
+                    var context= canvas.getContext("2d");
+                    context.fillStyle = "yellow";
+                    context.fillRect(25, 30, 350, 250);
+                    context.strokeStyle = "#fa00ee";
+                    context.lineWidth = 6;
+                    context.lineCap = "round";
+                    context.arc(40, 30, 40, 0, Math.PI, false);
+                    context.stroke();
+                </script>
+            </section>
+
+            <section>
+                <div>
+                    <canvas id="canv4"></canvas>
+                </div>
+                <script type="text/javascript">
+                    var canvas = document.getElementById("canv4");
+                    var context = canvas.getContext('2d');
+                    context.moveTo(0, 0);
+                    context.lineTo(300, 150);
+                    context.strokeStyle = '#ee00ee';
+                    context.lineWidth = '20';
+                    context.stroke();
+
+                </script>
+            </section>
+
+            <section>
+                <div>
+                    <svg height="150" width="150">
+                    <circle cx="75" cy="75" r="60" stroke="blue" stroke-width="4" fill="green" />
+                    </svg>
+                    <svg height="250" width="450">
+                        <polyline points="20,25 40,45 60,70 90,125 127,145 205,190"
+                           style="fill:none;stroke:blue;stroke-width:5" />
+                    </svg>
+                </div>
+            </section>
+
+            <section>
+                <p id="KUL_DENE">KULLANICI KONUMU:</p>
+                <button onclick="getuserLocation()"> KONUM KONTROL</button>
+                <div id="HAR_DENE"></div>
+                <script>
+                    var x=document.getElementById("KUL_DENE");
+                    function getuserLocation(){
+                        if (navigator.geolocation) {
+                            navigator.geolocation.getCurrentPosition(showuserPosition,showbrowserError);
+                        }
+                        else{
+                            x.innerHTML="TARAYICI GEOLOCATION I DESTEKLEMIYOR";
+                        }
+                    }
+               
+                    function showuserPosition(position) {
+                        var latlon=position.coords.latitude+","+position.coords.longitude;
+                        var img_url="http://maps.googleapis.com/maps/api/staticmap?center="
+                        +latlon+"&zoom=14&size=400x300&sensor=false";
+                        document.getElementById("HAR_DENE").innerHTML="<img src='"+img_url+"'>";
+                    }
+
+                    function showbrowserError(error){
+                        switch(error.code)
+                        {
+                            case error.PERMISSION_DENIED:
+                            x.innerHTML="KULLANICI GEOLOCATION TALEBINI REDDETTI"
+                            break;
+                            case error.POSITION_UNAVAILABLE:
+                            x.innerHTML="KONUM BILGISI YOK"
+                            break;
+                            case error.TIMEOUT:
+                            x.innerHTML="ZAMAN ASIMI"
+                            break;
+                            case error.UNKNOWN_ERROR:
+                            x.innerHTML="BILINMEYEN HATA"
+                            break;
+                        }
+                    }
+            </script>
+            </section>
+
+
+            <section>
+                <div>
+                    <h2>HTML5-GOOGLE HARITASINDAKI YERINIZ</h2>
+                    <div id="HARITA_M"></div>
+                </div>
+            </section>
+
+
+            <section>
+                Field 1:<input type="text" id="textField1" value="Ally Bros is rising"><br>
+                Field 2:<input type="text" id="textField2">
+                Field 3:<input type="text" id="textField3"><br>
+
+                <button onclick="kopyala()">Copy from field 1 to field 2 and 3</button>
+            </section>
+
+
+            <section>
+                <canvas id="mouseTracker" width="300" height="100" style= "background:blue"></canvas>
+                <script>
+                    var canvas = document.getElementById('mouseTracker');
+                    var context = canvas.getContext('2d');
+                    canvas.addEventListener('mousemove', handleMoveEvent, false);
+
+                    function handleMoveEvent(olay) {
+                        var mousePos = getMousePos(canvas, olay);
+                        var ileti = 'Mouse KONUMU: ' + mousePos.x + ',' + mousePos.y;
+                        YAZileti(canvas, ileti);
+                    }
+
+                    function YAZileti(canvas, ileti) {
+                        var context = canvas.getContext('2d');
+                        context.clearRect(0, 0, canvas.width, canvas.height);
+                        context.fillStyle = 'black';
+                        context.font = '20px Courier';
+                        context.fillText(ileti, 15, 30);
+                    }
+               
+                    function getMousePos(canvas, olay) {
+                        var rect = canvas.getBoundingClientRect();
+                        return {
+                            x: olay.clientX - rect.left,
+                            y: olay.clientY - rect.top
+                        };
+                    }
+                </script>                
+            </section>
+
+
+
+            <section>
+                
+
+                <center>
+                    <h2>SURUKLE BIRAK-HTML5</h2>
+                    <div>UYGULA</div>
+                    <div id="KUTU1" draggable="true"
+                    ondragstart="return dragStart(event)">
+                        <p>SURUKLE</p>
+                    </div>
+                    <div id="KUTU2"></div>
+                </center>
+            </section><br>
+
+
+
+            <section>
+                <div id="divVariable"></div>
+
+
+                <script type="text/javascript">
+
+                    //JSON olarak saklamak falan
+                    var komp_veri = [1, 2, 3, 4, 5, 6];
+                    localStorage.setItem("veri anahtarları",  JSON.stringify(komp_veri));
+                    var depo_veri = localStorage.getItem("komp_veri");
+                    if (depo_veri) {
+                        komp_veri = JSON.parse(depo_veri);
+                    }
+                    
+
+                    if (typeof(Storage) != "undefined") {
+                        //Put variables in local storage
+//                        localStorage.setItem("SOYAD", "ORCUN");
+
+                        //Take "SOYAD" variable from localStorage
+                        let soyad = localStorage.getItem("SOYAD");
+                        document.getElementById("divVariable").innerHTML = soyad;
+                    } else {
+                        document.getElementById("divVariable").innerHTML = "Web browser not supported web storage"
+                    }
+
+
+
+                </script>
+
+            </section>
+
+
+            <section>
+                <div>
+                    <input type="color" id="color">
+
+                    <input type="date" id="date">
+                    <input type="datetime" id="datetime">
+                    <input type="datetime-local" id="datetime-local">
+                    <input type="email" id="email">
+                    <input type="month" id="month">
+                    <input type="number" id="number">
+                    <input type="range" name="range">
+                    <input type="search" name="search">
+                    <input type="tel" name="tel">
+                    <input type="time" name="time">
+                    <input type="url" name="url">
+                    <input type="week" name="week">
+                </div>
+
+            </section>
+
+
+
+
+
+
+
+            <footer>
+              <h3 id="yazar">Geleceği Yazanlar</h3>
+            </footer>
+            
+        </p>
+
+    </body>
+</html>
