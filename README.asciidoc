@@ -1,0 +1,139 @@
+= GNU Projesi
+
+https://www.gnu.org
+
+http://www.stallman.org/[Richard Stallman]
+
+== İlk yazılım paylaşma topluluğu
+
+1971 yılında MIT Yapay Zekâ Laboratuvarında çalışmaya başladığımda, yıllarca varlığını sürdürmüş bir yazılım paylaşım topluluğunun bir parçası haline geldim. Yazılımların paylaşılması özel topluluğumuzla sınırlı değildi; bu, bilgisayar tarihi kadar eskiydi, tariflerin paylaşılmasının aşçılık kadar eski olması gibi. Ancak bunu çok iyi bir şekilde başardık.
+
+YZ Laboratuvarı, zamanın en büyük bilgisayarlarından biri olan Digital PDP-10 için laboratuvar ekibi hacker’larının tasarladığı ve assembler dilinde yazdığı ITS (Uyuşmaz Zaman Paylaşımlı Sistem) olarak adlandırılan bir zaman paylaşımlı işletim sistemini kullanmaktaydı. Bu topluluğun bir üyesi, YZ laboratuvar sistem hacker’ı olarak, benim görevim bu sistemi daha da geliştirmekti.
+ 
+Yazılımımızı “özgür yazılım” olarak adlandırmadık çünkü o zamanlar bu terim yoktu ancak gerçekte bu özgür yazılımdı. Başka bir üniversiteden ya da firmadan insanlar programımızı almak ve kullanmak istedikleri zaman, buna memnuniyetle izin veriyorduk. Birinin pek bilinmeyen ve ilginç bir program kullandığını görürseniz, her zaman kaynak kodunu görmek istersiniz, böylece kaynak kodunu okur, değiştirir ya da yeni bir program oluşturmak için, parçalayıp başka şekilde birleştirirsiniz.
+  
+(1) Yaygın medyada “güvenlik kırıcısı”nı ifade etmek için “hacker”ın kullanılması kafa karışıklığı yaratır. Biz hacker’lar bu ifadeyi kabul etmeyiz ve hacker’ın kelime anlamı olarak “programlamayı seven, oyuncu zekadan veya bunların bir bileşiminden hoşlanan kimse” tanımını kullanmayı tercih ederiz.
+   
+
+=== Özgür Yazılım temelde nelerden oluşur?
+. Kullanım Özgürlüğü: 
+- Bir özgür yazılımı, istediğiniz yerde istediğiniz şekilde kullanmakta özgürsünüz.
+. İnceleme Özgürlüğü
+- Bir özgür yazılımın nasıl işlediğini istediğiniz gibi inceleyip, isterseniz yazılma amacının dışındaki bir ihtiyacınıza uyarlayabilirsiniz. Doğal olarak bunun için kaynak kodların erişilmesine ihtiyaç var.
+. Dağıtım Özgürlüğü
+- Bir özgür yazılımı, istediğiniz şekilde dağıtabilir ve başkalarıyla paylaşabilirsiniz. Bu özgürlüğün içinde ilgili yazılımı satmak da dahildir.
+. Değiştirme Özgürlüğü
+- Bir özgür yazılımın kodlarını istediğiniz gibi değiştirebilirsiniz. Üstelik yaptığınız bu değişiklikleri, başkalarıyla istediğiniz gibi paylaşabilirsiniz. Yukarıda sayılan bütün bu özgürlükler üzerine sadece bir kısıtlama gelmekte, ki bu kısıtlama özgürlüğünüzü güvence altına alır. Bir özgür yazılım üzerinde yapılacak değişikliklikler aynı şekilde, açık ve özgür olarak, yayınlanmalıdır.
+
+image::https://miro.medium.com/max/535/1*n4AsTo_3JPNgXqfaBS6aXw.png[Richar Stallman Quote]
+
+NOTE: Özgür olmayan lisanların kullanılması, insanlığın ortak mirasıyla üretilen geliştirmlerin insanlıktan saklanması ve bu yolla ilerlemenin önüne geçilmesidir.
+
+TIP: Özgür yazılımlar satılabilir.
+
+IMPORTANT: Özgür yazılım, uygulamanın satılmasına karşı değildir.
+
+WARNING: Yazılıma para ödemiyorsanız, ürünün siz olma ihtimali hayli yüksektir.
+
+CAUTION: Ürünleri lisanslarına dikkat ederek kullanmamız gerekir.
+
+link:https://duckduckgo.com/?q=GNU&t=h_&ia=web[Daha fazla bilgi için arama motorlarını kullanabilirsiniz]
+
+
+=== Kod örnekleri
+
+* Şimdiye kadar özgür yazılımdan biraz bahsettik peki biraz da bash kodları nasıl yazılır buna bakalım, öncelikle hangi kabukta çalışmak istediğimizi belirtiyoruz bunu `+#! /bin/bash+` şeklinde belirtebiliyoruz. Burada `+/bin/+` lokasyonunda `+bash+` kabuğunda yorumlanıp çalıştırılacağını belirtiyoruz. Şimdi örneği bir bütün olarak görelim : 
+
+.ffmpeg_multi.sh
+[source,bash]
+----
+#! /bin/bash
+///ffmpeg_multi.sh m4a mp3 ./Desktop/musiccc/ ./Desktop/mp3/
+srcExt=$1
+destExt=$2
+
+srcDir=$3
+destDir=$4
+
+opts=$5
+
+for filename in "$srcDir"/*.$srcExt; do
+
+        basePath=${filename%.*}
+        baseName=${basePath##*/}
+
+        ffmpeg -i "$filename" $opts "$destDir"/"$baseName"."$destExt"
+
+done
+
+echo "Conversion from ${srcExt} to ${destExt} complete!"
+----
+
+Bu kod parçacığı parametre olarak verilen dosyaları istenilen biçimlerde dönüştürmektedir.
+
+* Önemli olduğunu düşündüğüm için biraz da C++ kodu göstermek istiyorum. O yüzden bir hello world örnek yapalım. Öncelikle şunu bilmemiz gerekiyor, `+#include <iostream>+` kodu ile standart giriş çıkışı aktif etmeliyiz. Devamında kodumuz:
+
+.helloWorld!.cpp
+[source, c++]
+----
+#include <iostream>
+using namespace std;
+
+int main() 
+{
+    cout << "Hello, World!";
+    return 0;
+}
+----
+
+=== Yazılım şirketlerinin açıkladığı satış rakamlarına göre kişisel bilgisayarlarda işletim sistemlerinin kullanım payı
+
+Burada sizinle bazı verileri paylaşmak istiyorum. Bu veriler önemli çünkü özgür yazılımın ne kadar değerli olduğunu anlayabiliriz.
+
+[%header,cols=3*] 
+|===
+|Şirket
+|2010 geliri
+|2010 Pazar Payı (%)
+
+|Microsoft
+|23,848
+|78.6 
+
+|IBM
+|2,284
+|7,5
+
+|HP
+|1,125 
+|3.7 
+
+|Oracle
+|780 
+|2.6 
+
+
+|Red Hat 
+|610 
+|2.0 
+
+|Apple 
+|520 
+|1.7 
+|===
+
+Yararlı dökümanlar:
+
+link:index.html[Docs]
+https://www.getgnu.org/[GNU,role=external,window=_blank]
+
+Ayrıca daha iyi anlamak için lütfen <<Özgür Yazılım temelde nelerden oluşur?>> kısmına tekrar bakınız.
+
+
+video::Ag1AKIl_2GM[youtube]
+video::o8NPllzkFhE[youtube]
+video::videoplayback.mpeg[Richard Stallman]
+
+
+
+
