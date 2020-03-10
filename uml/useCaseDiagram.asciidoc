@@ -1,0 +1,8 @@
+[plantuml,useCaseDiagram,png]
+....
+
+User --> (Uygulama) : Fatura ister
+(Uygulama) --> (API) : Fatura işlemi için istek atar
+(API) ---> (Uygulama) : Fatura işlemi için cevap gönderir
+(Uygulama) --> :User: : Faturayı gösterir
+

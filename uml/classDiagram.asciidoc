@@ -1,0 +1,15 @@
+[plantuml,classDiagram,png]
+....
+
+class Car{
+	int speed
+	int increaseSpeed()
+	int decreaseSpeed()
+}
+
+Driver - Car : drives >
+Car *- Wheel : have 4 >
+Car -- Person : < owns
+
+
+
