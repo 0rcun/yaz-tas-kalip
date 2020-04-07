@@ -1,0 +1,55 @@
+= Singleton Pattern
+
+Singleton pattern bir sınıftan yalnızca bir nesne oluşmasını zorlamak için oluşturulmuş bir kalıptır.
+
+Ben internetten fotoğraf çekmek için bir sınıf oluşturdum. Burada her çekişimde yeni bir nesne oluşturmamak için singleton kalıbını kullandım.
+
+
+[source,java]
+
+----
+
+public class CustomRequest {
+    private static CustomRequest mInstance;
+
+    private CustomRequest() {    } <1> 
+    
+    public static synchronized CustomRequest getInstance() { <2>
+        if (mInstance == null) {
+            mInstance = new CustomRequest();
+        }
+        return mInstance;
+    }
+
+    public Image getImage(String dest) throws IOException { <3>
+        Image image = null;
+        URL url = new URL(dest);
+        image = ImageIO.read(url);
+        return image;
+    }
+}
+
+----
+<1> Contructor private yapılarak dışarıdan nesne oluşturulması kısıtlanmıştır. Bu sayede yalnızca bizim belirlediğimiz esaslar doğrultusunda nesne oluşturulmasına izin verilmiştir.
+
+<2> Burada nesne oluşumunu sağladığımız metottur. Burada dikkat edilmesi gereken birinci durum *synchronized* kelimesidir. Bu kelime çoklu threadler ile çalıştığımızda fonksiyonun kullanımını düzenler yani şöyle açıklamak gerekirse aynı anda iki thread fonksiyonu işletemez bu sayede bir alt satırdaki if koşulunun sağlıklı çalışması sağlanır. Bir diğer dikkat edilmesi gereken yer if koşuludur. Sınıfın başında *mInstance* diye static bir nesne tanımlanmış ve değer ataması olarak *null* yapılmıştır. Burada ilk olarak bu bu nesnenin adres ataması olup olmadığı kontrol ediliyor. Eğer adres ataması yapılmamışsa adres ataması yapılıp, bu nesne için yer alınıyor ve geri döndürülüyor. Eğer daha önce yer alındıysa bu yerin adresi döndürülüyor. Bu sayede bir adet nesne ile bu sınıfın fonksiyonları kullanılmış oluyor.
+
+<3> Sınıfın bir fonksiyonudur.
+
+== UML
+
+
+[uml,file="umlSingleton.png"]
+--
+@startuml
+
+Class CustomRequest{
+    - mInstance
+    - mInstance()
+    + getInstance(): CustomRequest
+    + getImage(String dest): Image
+}
+
+
+@enduml
+--  

@@ -1,0 +1,130 @@
+= Factory Pattern
+
+Yazdığımız programlarda benzer sınıfları bir interface altında toplayıp üretici bu sınıfları başka bir üretici sınıf kontrolünde üretmek. Bu kalıp bize okunabilirlik sağlar.
+
+Ben bir oyunda karakterler oluşturmak için bunu kullanacağım. Burada ırklar olacak bu nedenle her ırkın belirli fonksiyonları olması gerektiğini düşündüm bunları *Races* isimli interface'de belirtip sonrasında her ırk sınıfının buradan *Races* sınıfını implement ederek fonksiyonları kendi ırklarına göre doldurmalarını sağladım. Ayrıca birde *CharacterFactory* isimli bir fonksiyon yardımıyla bu ırkların üretilmesini sağladım. 
+
+[source,java]
+
+----
+
+public interface Races {    <1>
+
+    String getRace();
+    String getName();
+    String getCharacteristicFeatures();
+    String getPersonality();
+    String getPhysicalFeatures();
+    String getHomeland();
+    String getLanguage();
+    String getSpecialSkills();
+}
+
+public class CharacterFactory {     <2>
+
+    public Races getRace(String race){
+
+        if(race == null){
+            return null;
+        }
+        if(race.equalsIgnoreCase("Bothan")){
+            return new Bothan();
+
+        } else if(race.equalsIgnoreCase("Cerean")){
+            return new Cerean();
+
+        } else if(race.equalsIgnoreCase("Duros")){
+            return new Duros();
+
+        } else if(race.equalsIgnoreCase("insan")){
+            return new Insan();
+
+        }
+
+        return null;
+    }
+}
+----
+
+<1> İlk olarak bir interface yardımıyla tüm sınıfları ortak bir arabirimde topluyoruz. Bu bize nesne üretiminde alt sınıflar yerine direkt interface tipinde nesneler üretebilmeyi sağlayacak.
+
+<2> Burada tanımlanan sınıf verilen tipe göre nesneler döndürüyor. Bu sayede yazılımcıdan nesne oluşturma kısmını soyutlamış oluyoruz.
+
+== UML
+
+[uml,file="umlFactory.png"]
+--
+@startuml
+left to right direction
+
+Interface Races{
+    String getRace()
+    String getName()
+    String getCharacteristicFeatures()
+    String getPersonality()
+    String getPhysicalFeatures()
+    String getHomeland()
+    String getLanguage()
+    String getSpecialSkills()
+}
+
+Class Insan{
+    
+}
+
+Class Bothan{
+    
+}
+
+Class Cerean{
+    
+}
+Class Duros{
+    
+}
+
+Class CharacterFactory{
+    + Races getRace(String race)
+}
+
+Insan --|> Races
+Bothan --|> Races
+Cerean --|> Races
+Duros --|> Races
+
+CharacterFactory ..-> Insan : <<use>>
+CharacterFactory ..-> Bothan : <<use>>
+CharacterFactory ..-> Cerean : <<use>>
+CharacterFactory ..-> Duros : <<use>>
+
+
+@enduml
+--  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
