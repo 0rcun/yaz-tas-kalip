@@ -1,0 +1,49 @@
+@startuml
+
+class Computer {
+    -String CPU
+    -int RAM
+    -int SSDSize
+    +void setCPU(String CPU)
+    +void setRAM(int RAM)
+    +void setSSDSize(int SSDSize)
+    +String getCPU()
+    +int getRAM()
+    +int getSSDSize()
+}
+abstract class  ComputerBuilder {
+    #Computer computer;
+    +Computer getComputer()
+    +void createNewComputer()
+     +{abstract} void determineCPU();
+     +{abstract} void determineRAM();
+     +{abstract} void determineSSDSize();
+}
+
+class GameComputerBuilder extends ComputerBuilder {
+    + void determineCPU()
+    + void determineRAM()
+    public void determineSSDSize()
+}
+
+class WorkstationComputerBuilder extends ComputerBuilder {
+    + void determineCPU()
+    + void determineRAM()
+    + void determineSSDSize()
+}
+class Factory {
+    -ComputerBuilder computerBuilder;
+    + void setComputerBuilder(ComputerBuilder pb)
+    + Computer getComputer()
+    + void constructComputer()
+}
+
+Main -> Factory : use
+Main -> ComputerBuilder : use
+Main -> Computer : use
+
+
+
+
+
+@enduml

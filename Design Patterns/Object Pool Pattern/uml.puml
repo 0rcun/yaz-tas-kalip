@@ -1,0 +1,66 @@
+@startuml
+left to right direction
+
+abstract class NPC{
+    - String name;
+    - int hitPoints;
+    - int shield;
+    - int damage;
+    - int speed;
+    - int experiencePoint;
+    - int honor;
+    - int credit;
+    - int uridium;
+    {abstract} void move()
+    + String getName()
+    + void setName(String name)
+    + int getHitPoints()
+    + void setHitPoints(int hitPoints)
+    + int getShield()
+    + void setShield(int shield)
+    + int getDamage()
+    + void setDamage(int damage)
+    + int getSpeed()
+    + void setSpeed(int speed)
+    + int getExperiencePoint()
+    + void setExperiencePoint(int experiencePoint)
+    + int getHonor()
+    + void setHonor(int honor)
+    + int getCredit()
+    + void setCredit(int credit)
+    + int getUridium()
+    + void setUridium(int uridium)
+}
+
+class NpcClient implements Runnable{
+    {static} int threadCount
+    - Thread t;
+    + void run()
+}
+class NPCManager {
+    - {static} NPCManager mInstance
+    - int avaliableNPC
+    -List<NPC> NPCPool
+    -List<NpcClient>
+    -NPCManager()
+     + {static}NPCManager getInstance()
+     +NPC takeNPC(NpcClient npcClient)
+    +void releaseNPC(NPC npc, NpcClient npcClient)
+}
+
+class Struener extends NPC {
+    +Struener()
+    +void move()
+}
+class Main{
+    {static} void createRequest()
+    + {static} void main()
+}
+
+NPCManager "1"*--"1" NPCManager
+Main --> NpcClient : <<use>>
+NpcClient --> NPCManager : <<use>>
+NPCManager --> NPC : <<use>>
+NPCManager "1"*--"*" NPC
+
+@enduml

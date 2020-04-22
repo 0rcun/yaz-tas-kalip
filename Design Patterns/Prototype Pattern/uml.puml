@@ -1,0 +1,89 @@
+@startuml
+
+class Devolarium extends NPC {
+    + Devolarium()
+    + move() {}
+}
+class Lordakia extends NPC{
+    + Lordakia()
+    +void move()
+}
+
+class Main {
+    +{static} void main() {
+}
+
+class Map {
+    - String name;
+    - Image appearance;
+    +Map(String name)
+    +String getName()
+    +void setName(String name)
+    +Image getAppearance()
+    +void setAppearance(Image appearance)
+}
+
+class Mordon extends NPC{
+    +Mordon()
+    +void move()
+}
+
+abstract class NPC{
+    - String name;
+    - int hitPoints;
+    - int shield;
+    - int damage;
+    - int speed;
+    - int experiencePoint;
+    - int honor;
+    - int credit;
+    - int uridium;
+     - Map map;
+    {abstract} void move()
+    + String getName()
+    + void setName(String name)
+    + int getHitPoints()
+    + void setHitPoints(int hitPoints)
+    + int getShield()
+    + void setShield(int shield)
+    + int getDamage()
+    + void setDamage(int damage)
+    + int getSpeed()
+    + void setSpeed(int speed)
+    + int getExperiencePoint()
+    + void setExperiencePoint(int experiencePoint)
+    + int getHonor()
+    + void setHonor(int honor)
+    + int getCredit()
+    + void setCredit(int credit)
+    + int getUridium()
+    + void setUridium(int uridium)
+    + void setMap(Map map)
+    + Map getMap()
+}
+class NPCCache {
+    - {static} HashMap<String,NPC> npcMap
+    + {static} NPC getNPC(String name)
+    + {static} void loadCache()
+    + {static} void changeFeature()
+}
+class Saimon extends NPC{
+    + Saimon()
+    + void move()
+}
+class Struener extends NPC{
+    public Struener()
+    public void move()
+}
+
+
+
+Main ---> NPCCache : <<use>>
+Devolarium ---> Map : <<use>>
+Lordakia ---> Map : <<use>>
+Mordon ---> Map : <<use>>
+Saimon ---> Map : <<use>>
+Struener ---> Map : <<use>>
+NPCCache ---> NPC : <<use>>
+
+@enduml
